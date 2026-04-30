@@ -15,7 +15,7 @@
     <div class="col-md-3 mb-3">
         <div class="card bg-info text-white">
             <div class="card-body">
-                <h6>Total Produk</h6>
+                <h6><i class="fas fa-cubes"></i> Total Produk</h6>
                 <h3>{{ $totalProducts }}</h3>
                 <small>produk terdaftar</small>
             </div>
@@ -25,7 +25,7 @@
     <div class="col-md-3 mb-3">
         <div class="card bg-success text-white">
             <div class="card-body">
-                <h6>Total Stok</h6>
+                <h6><i class="fas fa-boxes"></i> Total Stok</h6>
                 <h3>{{ $totalStock }}</h3>
                 <small>unit tersedia</small>
             </div>
@@ -35,7 +35,7 @@
     <div class="col-md-3 mb-3">
         <div class="card bg-warning text-dark">
             <div class="card-body">
-                <h6>Penjualan Hari Ini</h6>
+                <h6><i class="fas fa-hand-holding-usd"></i> Penjualan Hari Ini</h6>
                 <h3>Rp {{ number_format($todaySales, 0, ',', '.') }}</h3>
                 <small>pendapatan</small>
             </div>
@@ -45,7 +45,7 @@
     <div class="col-md-3 mb-3">
         <div class="card bg-primary text-white">
             <div class="card-body">
-                <h6>Pemasukan Bulan Ini</h6>
+                <h6><i class="fas fa-wallet"></i> Pemasukan Bulan Ini</h6>
                 <h3>Rp {{ number_format($monthSales, 0, ',', '.') }}</h3>
                 <small>penjualan</small>
             </div>
@@ -56,7 +56,7 @@
     <div class="col-md-3 mb-3">
         <div class="card bg-danger text-white">
             <div class="card-body">
-                <h6>Pengeluaran Hari Ini</h6>
+                <h6><i class="fas fa-shopping-cart"></i> Pengeluaran Hari Ini</h6>
                 <h3>Rp {{ number_format($todayExpense, 0, ',', '.') }}</h3>
                 <small>belanja stok</small>
             </div>
@@ -66,7 +66,7 @@
     <div class="col-md-3 mb-3">
         <div class="card bg-danger text-white" style="opacity: 0.9;">
             <div class="card-body">
-                <h6>Pengeluaran Bulan Ini</h6>
+                <h6><i class="fas fa-shopping-basket"></i> Pengeluaran Bulan Ini</h6>
                 <h3>Rp {{ number_format($monthExpense, 0, ',', '.') }}</h3>
                 <small>belanja stok</small>
             </div>
@@ -76,7 +76,7 @@
     <div class="col-md-3 mb-3">
         <div class="card {{ $todayProfit >= 0 ? 'bg-success' : 'bg-secondary' }} text-white">
             <div class="card-body">
-                <h6>Laba Hari Ini</h6>
+                <h6><i class="fas fa-chart-line"></i> Laba Hari Ini</h6>
                 <h3>Rp {{ number_format($todayProfit, 0, ',', '.') }}</h3>
                 <small>pemasukan - pengeluaran</small>
             </div>
@@ -86,7 +86,7 @@
     <div class="col-md-3 mb-3">
         <div class="card {{ $monthProfit >= 0 ? 'bg-success' : 'bg-secondary' }} text-white" style="opacity: 0.9;">
             <div class="card-body">
-                <h6>Laba Bulan Ini</h6>
+                <h6><i class="fas fa-chart-bar"></i> Laba Bulan Ini</h6>
                 <h3>Rp {{ number_format($monthProfit, 0, ',', '.') }}</h3>
                 <small>pemasukan - pengeluaran</small>
             </div>
