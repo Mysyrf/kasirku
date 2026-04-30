@@ -41,43 +41,27 @@
                 <tbody>
                     @foreach($products as $product)
                     <tr id="product-row-{{ $product->id }}">
-                        <form method="POST" action="{{ route('products.updatePrice', $product->id) }}" style="display: inline;">
-                            @csrf
-                            @method('PUT')
-                            <td>{{ $product->barcode }}</td>
-                            <td>{{ $product->name }}
-                            <td>{{ $product->category->name ?? '-' }}</td>
-                            <td>
-                                <input type="number" name="price_retail" class="form-control form-control-sm" 
-                                       value="{{ $product->price_retail ?: $product->price }}" style="width: 100px" required>
-                            </td>
-                            <td>
-                                <input type="number" name="price_wholesale" class="form-control form-control-sm" 
-                                       value="{{ $product->price_wholesale }}" style="width: 100px">
-                            </td>
-                            <td>
-                                <input type="number" name="wholesale_min_qty" class="form-control form-control-sm" 
-                                       value="{{ $product->wholesale_min_qty }}" style="width: 80px">
-                            </td>
-                            <td>{{ $product->stock }}
-                            <td>{{ $product->unit }}
-                            <td>
-                                <button type="submit" class="btn btn-sm btn-success" title="Simpan Harga">
-                                    <i class="fas fa-save"></i>
+                        <td>{{ $product->barcode }}</td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->category->name ?? '-' }}</td>
+                        <td>Rp {{ number_format($product->price_retail ?: $product->price, 0, ',', '.') }}</td>
+                        <td>Rp {{ number_format($product->price_wholesale, 0, ',', '.') }}</td>
+                        <td>{{ $product->wholesale_min_qty }}</td>
+                        <td>{{ $product->stock }}</td>
+                        <td>{{ $product->unit }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $product->id }}" 
+                                    data-bs-toggle="modal" data-bs-target="#productModal" title="Edit Data Produk">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <form method="POST" action="{{ route('products.destroy', $product->id) }}" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                                    <i class="fas fa-trash"></i>
                                 </button>
-                        </form>
-                                <button class="btn btn-sm btn-warning btn-edit" data-id="{{ $product->id }}" 
-                                        data-bs-toggle="modal" data-bs-target="#productModal" title="Edit Data Produk">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <form method="POST" action="{{ route('products.destroy', $product->id) }}" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -134,7 +118,7 @@
                         </select>
                     </div>
                     <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i> Untuk mengubah harga, langsung edit di tabel.
+                        <i class="fas fa-info-circle"></i> Untuk mengubah harga, silakan gunakan menu <strong>Manajemen Harga</strong>.
                     </div>
                     <div class="modal-footer px-0 pb-0">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

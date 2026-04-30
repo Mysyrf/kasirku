@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card">
-    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
         <h5 class="mb-0"><i class="fas fa-history"></i> Riwayat Perubahan Harga</h5>
         <a href="{{ route('products.price') }}" class="btn btn-sm btn-light">
             <i class="fas fa-arrow-left"></i> Manajemen Harga

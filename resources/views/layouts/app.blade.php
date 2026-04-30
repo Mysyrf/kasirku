@@ -55,6 +55,27 @@
             box-shadow: 0 5px 15px rgba(102,126,234,0.4);
         }
         
+        /* Unified Theme Colors */
+        .bg-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        }
+        
+        .text-primary {
+            color: #764ba2 !important;
+        }
+        
+        .table-dark {
+            --bs-table-bg: #4c3c6d;
+            --bs-table-border-color: #5c4a85;
+            --bs-table-striped-bg: #42345e;
+        }
+        
+        .btn-info {
+            background-color: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+        
         .product-card {
             cursor: pointer;
             transition: all 0.3s;
