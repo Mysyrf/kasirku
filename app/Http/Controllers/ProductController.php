@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\PriceHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -90,18 +92,37 @@ public function updatePrice(Request $request, Product $product)
     $priceRetail = $request->price_retail;
     $priceWholesale = $request->price_wholesale ?? 0;
     $wholesaleMinQty = $request->wholesale_min_qty ?? 10;
+    $discountPercent = $request->discount_percent ?? 0;
     
     $priceType = ($priceWholesale > 0) ? 'retail_wholesale' : 'single';
     
+    // Catat riwayat jika ada perubahan
+    if ($product->price_retail != $priceRetail || 
+        $product->price_wholesale != $priceWholesale || 
+        $product->discount_percent != $discountPercent) {
+        
+        PriceHistory::create([
+            'product_id' => $product->id,
+            'old_retail_price' => $product->price_retail ?: $product->price,
+            'new_retail_price' => $priceRetail,
+            'old_wholesale_price' => $product->price_wholesale,
+            'new_wholesale_price' => $priceWholesale,
+            'old_discount_percent' => $product->discount_percent,
+            'new_discount_percent' => $discountPercent,
+            'changed_by' => Auth::check() ? Auth::user()->name : 'System'
+        ]);
+    }
+
     $product->update([
         'price' => $priceRetail,
         'price_retail' => $priceRetail,
         'price_wholesale' => $priceWholesale,
         'wholesale_min_qty' => $wholesaleMinQty,
+        'discount_percent' => $discountPercent,
         'price_type' => $priceType
     ]);
 
-    return redirect()->route('products.index')->with('success', 'Harga ' . $product->name . ' berhasil diupdate!');
+    return redirect()->back()->with('success', 'Harga ' . $product->name . ' berhasil diupdate!');
 }
 public function bulkUpdatePrice(Request $request)
 {
@@ -119,6 +140,23 @@ public function bulkUpdatePrice(Request $request)
             $priceWholesale = $data['price_wholesale'] ?? 0;
             $wholesaleMinQty = $data['wholesale_min_qty'] ?? 10;
             $discountPercent = $data['discount_percent'] ?? 0;
+            
+            // Catat riwayat
+            if ($product->price_retail != $priceRetail || 
+                $product->price_wholesale != $priceWholesale || 
+                $product->discount_percent != $discountPercent) {
+                
+                PriceHistory::create([
+                    'product_id' => $product->id,
+                    'old_retail_price' => $product->price_retail ?: $product->price,
+                    'new_retail_price' => $priceRetail,
+                    'old_wholesale_price' => $product->price_wholesale,
+                    'new_wholesale_price' => $priceWholesale,
+                    'old_discount_percent' => $product->discount_percent,
+                    'new_discount_percent' => $discountPercent,
+                    'changed_by' => Auth::check() ? Auth::user()->name : 'System'
+                ]);
+            }
             
             $updateData = [
                 'price_type' => $priceType,
@@ -141,5 +179,11 @@ public function bulkUpdatePrice(Request $request)
     }
     
     return redirect()->back()->with('success', 'Semua harga berhasil diupdate!');
+}
+
+public function priceHistoryIndex()
+{
+    $histories = PriceHistory::with('product')->latest()->paginate(20);
+    return view('products.price_history', compact('histories'));
 }
 }

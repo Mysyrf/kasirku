@@ -2,9 +2,14 @@
 
 @section('content')
 <div class="card">
-    <div class="card-header bg-primary text-white">
-        <h5><i class="fas fa-tags"></i> Manajemen Harga Produk</h5>
-        <small>Atur harga eceran, grosir, dan diskon per produk</small>
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="mb-0"><i class="fas fa-tags"></i> Manajemen Harga Produk</h5>
+            <small>Atur harga eceran, grosir, dan diskon per produk</small>
+        </div>
+        <a href="{{ route('products.priceHistory') }}" class="btn btn-sm btn-light">
+            <i class="fas fa-history"></i> Riwayat Perubahan
+        </a>
     </div>
     <div class="card-body">
         @if(session('success'))
@@ -42,26 +47,34 @@
                         @method('PUT')
                         <tr id="row-{{ $product->id }}">
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $product->barcode }}奔驰
+                            <td>{{ $product->barcode }}</td>
                             <td>{{ $product->name }}
                                 <input type="hidden" name="price_type" value="{{ $product->price_wholesale > 0 ? 'retail_wholesale' : 'single' }}">
                             </td>
                             <td>
                                 <input type="number" name="price_retail" class="form-control form-control-sm" 
-                                       value="{{ $product->price_retail ?: $product->price }}" required>
+                                       value="{{ $product->price_retail ?: $product->price }}" required
+                                       onfocus="if(this.value=='0') this.value=''; else this.select();"
+                                       onblur="if(this.value=='') this.value='0';">
                             </td>
                             <td>
                                 <input type="number" name="price_wholesale" class="form-control form-control-sm" 
-                                       value="{{ $product->price_wholesale }}">
+                                       value="{{ $product->price_wholesale }}"
+                                       onfocus="if(this.value=='0') this.value=''; else this.select();"
+                                       onblur="if(this.value=='') this.value='0';">
                             </td>
                             <td>
                                 <input type="number" name="wholesale_min_qty" class="form-control form-control-sm" 
-                                       value="{{ $product->wholesale_min_qty }}">
+                                       value="{{ $product->wholesale_min_qty }}"
+                                       onfocus="if(this.value=='0') this.value=''; else this.select();"
+                                       onblur="if(this.value=='') this.value='0';">
                             </td>
                             <td>
                                 <div class="input-group input-group-sm">
                                     <input type="number" name="discount_percent" class="form-control" 
-                                           value="{{ $product->discount_percent }}">
+                                           value="{{ $product->discount_percent }}"
+                                           onfocus="if(this.value=='0') this.value=''; else this.select();"
+                                           onblur="if(this.value=='') this.value='0';">
                                     <span class="input-group-text">%</span>
                                 </div>
                             </td>

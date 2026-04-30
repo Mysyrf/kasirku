@@ -39,6 +39,7 @@ Route::middleware(['auth.custom'])->group(function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::resource('products', ProductController::class);
         Route::get('/products/price/manage', [ProductController::class, 'priceManagement'])->name('products.price');
+        Route::get('/products/price/history', [ProductController::class, 'priceHistoryIndex'])->name('products.priceHistory');
         Route::put('/products/{product}/price', [ProductController::class, 'updatePrice'])->name('products.updatePrice');
         Route::resource('purchases', PurchaseController::class);
     });

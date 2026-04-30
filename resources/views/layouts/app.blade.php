@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Sistem Kasir Toko MZ</title>
+    <title>Sistem Kasir Lima Saudara Grup</title>
     <!-- Favicon Toko -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 576 512%22><path fill=%22%23764ba2%22 d=%22M547.6 103.8L490.3 13.1C485.2 5 476.1 0 466.4 0H109.6C99.9 0 90.8 5 85.7 13.1L28.3 103.8c-29.6 46.8-3.4 111.9 51.9 119.4c4 .5 8.1 .8 12.1 .8c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.1 0 49.3-11.4 65.2-29c15.9 17.6 39.1 29 65.2 29c26.2 0 49.3-11.4 65.2-29c16 17.6 39.1 29 65.2 29c4.1 0 8.1-.3 12.1-.8c55.5-7.4 81.8-72.5 52.1-119.4zM499.7 254.9l-.1 0c-5.3 .7-10.7 1.1-16.2 1.1c-31.2 0-58.4-16.7-73.4-41.5c-15 24.8-42.2 41.5-73.4 41.5s-58.4-16.7-73.4-41.5c-15 24.8-42.2 41.5-73.4 41.5s-58.4-16.7-73.4-41.5c-15 24.8-42.2 41.5-73.4 41.5c-5.5 0-10.9-.4-16.2-1.1l-.1 0c-1.3 10.9-2.1 21.9-2.1 33.1V464c0 26.5 21.5 48 48 48H448c26.5 0 48-21.5 48-48V288c0-11.2-.8-22.2-2.1-33.1z%22/></svg>">
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/png">
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -81,8 +81,9 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">
-                <i class="fas fa-store"></i> Toko MZ
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('dashboard') }}">
+                <img src="{{ asset('logo.png') }}" alt="Logo" style="height: 35px; border-radius: 5px; background: white; padding: 2px;" class="me-2">
+                Lima Saudara Grup
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -106,10 +107,16 @@
                     <!-- Menu ONLY ADMIN -->
                     @auth
                     @if(Auth::user()->role == 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}" href="{{ route('products.index') }}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ request()->routeIs('products.*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-boxes"></i> Produk
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('products.index') }}"><i class="fas fa-box"></i> Daftar Produk</a></li>
+                            <li><a class="dropdown-item" href="{{ route('products.price') }}"><i class="fas fa-tags"></i> Manajemen Harga</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ route('products.priceHistory') }}"><i class="fas fa-history"></i> Riwayat Harga</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('purchases.*') ? 'active' : '' }}" href="{{ route('purchases.index') }}">
@@ -158,7 +165,7 @@
 
     <!-- Footer -->
     <footer class="text-center mt-auto py-3 text-muted">
-        <small>&copy; {{ date('Y') }} Sistem Kasir Toko MZ. Copyright by <strong>mysyrf</strong>.</small>
+        <small>&copy; {{ date('Y') }} Sistem Kasir Lima Saudara Grup. Copyright by <strong>mysyrf</strong>.</small>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -481,7 +481,7 @@ $(document).ready(function() {
         return `
             <div style="font-family: monospace; font-size: 12px;">
                 <div style="text-align: center; margin-bottom: 15px;">
-                    <h4>TOKO RETAIL</h4>
+                    <h4>LIMA SAUDARA GRUP</h4>
                     <p>${new Date().toLocaleString()}</p>
                     <p><strong>No. Invoice: ${data.invoice_number}</strong></p>
                     <p>Pelanggan: ${data.customer_name || 'Umum'}</p>
